@@ -1,0 +1,53 @@
+name: Hasaki Product & Review Crawler
+
+on:
+  schedule:
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+jobs:
+  product-crawl:
+    name: Phase 2 - Product & Review Crawl
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run product & review crawler
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          SUPABASE_SCHEMA: raw
+          LOG_LEVEL: INFO
+        run: |
+          python crawler.py
+      
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: product-crawler-logs-${{ github.run_id }}
+          path: logs/
+          retention-days: 7
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Product crawl failed!"
+      
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Product & review crawl completed successfully!"
