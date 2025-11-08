@@ -46,8 +46,10 @@ class HasakiCrawler:
     """
     
     # Performance tuning constants
-    MAX_PRODUCT_WORKERS = 15  # Product API (lightweight, fast, 212 products)
-    MAX_REVIEW_WORKERS = 6    # Review API (heavy, multi-page per product, reduce to avoid socket errors)
+    # Workers allocation based on workload intensity:
+    # Review > Listing > Product (heaviest to lightest)
+    MAX_PRODUCT_WORKERS = 10  # Product API (lightest: 1 request per product, small response)
+    MAX_REVIEW_WORKERS = 20   # Review API (heaviest: multi-page per product, large responses, pagination)
     PROGRESS_LOG_INTERVAL = 25  # Log every N products/reviews
     
     def __init__(self):
