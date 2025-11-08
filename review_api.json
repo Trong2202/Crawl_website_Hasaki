@@ -1,0 +1,177 @@
+{
+    "status": {
+        "error_code": 0,
+        "error_message": "success",
+        "alert_message": ""
+    },
+    "data": {
+        "rating": {
+            "stars": [
+                {
+                    "star": 5,
+                    "count": 4,
+                    "description": "Rất hài lòng"
+                },
+                {
+                    "star": 4,
+                    "count": 1,
+                    "description": "Hài lòng"
+                },
+                {
+                    "star": 3,
+                    "count": 0,
+                    "description": "Bình thường"
+                },
+                {
+                    "star": 2,
+                    "count": 0,
+                    "description": "Không hài lòng"
+                },
+                {
+                    "star": 1,
+                    "count": 0,
+                    "description": "Rất tệ"
+                }
+            ],
+            "filter": [
+                {
+                    "key": "filter_all",
+                    "name": "Tất cả",
+                    "count": 5
+                },
+                {
+                    "key": "filter_5_star",
+                    "name": 5,
+                    "count": 4
+                },
+                {
+                    "key": "filter_4_star",
+                    "name": 4,
+                    "count": 1
+                },
+                {
+                    "key": "filter_3_star",
+                    "name": 3,
+                    "count": 0
+                },
+                {
+                    "key": "filter_2_star",
+                    "name": 2,
+                    "count": 0
+                },
+                {
+                    "key": "filter_1_star",
+                    "name": 1,
+                    "count": 0
+                },
+                {
+                    "key": "filter_has_image",
+                    "name": "Có hình ảnh",
+                    "count": 0
+                }
+            ]
+        },
+        "sort_params": [
+            {
+                "value": "create",
+                "label": "Ngày tạo"
+            },
+            {
+                "value": "best",
+                "label": "Đánh giá tốt nhất"
+            },
+            {
+                "value": "worst",
+                "label": "Đánh giá tệ nhất"
+            }
+        ],
+        "reviews": [
+            {
+                "id": 134493,
+                "product_id": 100109,
+                "product_name": "Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+                "content": "Mùi thơm lâu, hạt massage nhỏ không đau da, rửa lại với nước thì da mềm mịn.",
+                "user_id": 11596925,
+                "user_fullname": "MINH QUANG",
+                "rating": {
+                    "star": 5,
+                    "description": "Rất hài lòng"
+                },
+                "created_at": 1756557399,
+                "answer_rating": "Hasaki xin chào! Hasaki cảm ơn MINH QUANG đã dành thời gian đánh giá. Sự hài lòng của khách hàng là động lực to lớn để Hasaki ngày càng phát triển hơn nữa về chất lượng dịch vụ. Cảm ơn bạn đã tin tưởng và mua sắm tại Hasaki!",
+                "answer_created_at": 1756557399,
+                "is_bought": false,
+                "images": null
+            },
+            {
+                "id": 128256,
+                "product_id": 103627,
+                "product_name": "Combo 2 Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+                "content": "Mùi nghe như mùi chanh xả rất thơm, thơm kiểu tự nhiên, thư giãn. Tuy mật độ hạt không to, nhiều như Cocoon cà phê nhưng vẫn mịn. Nếu da nhiều chai sần thì không đủ đô. Tắm xong da ẩm mịn, sạch, sảng khoái. Độ lưu hương thì không nhiều. <br/>Cảm nhận chung là 9.5/10",
+                "user_id": 4266411,
+                "user_fullname": "Nguyễn Yến Nhi",
+                "rating": {
+                    "star": 5,
+                    "description": "Rất hài lòng"
+                },
+                "created_at": 1746721765,
+                "answer_rating": "Hasaki xin chào! Hasaki cảm ơn Nguyễn Yến Nhi đã dành thời gian đánh giá. Sự hài lòng của khách hàng là động lực to lớn để Hasaki ngày càng phát triển hơn nữa về chất lượng dịch vụ. Cảm ơn bạn đã tin tưởng và mua sắm tại Hasaki!",
+                "answer_created_at": 1746721765,
+                "is_bought": false,
+                "images": null
+            },
+            {
+                "id": 126512,
+                "product_id": 103627,
+                "product_name": "Combo 2 Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+                "content": "Mùi thơm cực kì luôn, bị cái là hạt scrub k bằng dove, sẽ mua lại nhiều lần",
+                "user_id": 17323629,
+                "user_fullname": "Nghi Lê",
+                "rating": {
+                    "star": 5,
+                    "description": "Rất hài lòng"
+                },
+                "created_at": 1743511113,
+                "answer_rating": "Hasaki xin chào! Hasaki cảm ơn Nghi Lê đã dành thời gian đánh giá. Sự hài lòng của khách hàng là động lực to lớn để Hasaki ngày càng phát triển hơn nữa về chất lượng dịch vụ. Cảm ơn bạn đã tin tưởng và mua sắm tại Hasaki!",
+                "answer_created_at": 1743511113,
+                "is_bought": false,
+                "images": null
+            },
+            {
+                "id": 125810,
+                "product_id": 103627,
+                "product_name": "Combo 2 Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+                "content": "loại này nghe review oke hơn cà phê nói chung thấy hạt scrub mật độ ko quá nhiều mà mùi thì ôi thôi trà đào cam sả nó thơm. xài xong da cũng mịn nói chung là giá săn được 55k một hủ thì đáng tiền nha còn hơn 100k thì hơi mắc",
+                "user_id": 6974357,
+                "user_fullname": "c Trinh",
+                "rating": {
+                    "star": 5,
+                    "description": "Rất hài lòng"
+                },
+                "created_at": 1742031056,
+                "answer_rating": "Hasaki xin chào! Hasaki cảm ơn bạn đã dành thời gian đánh giá. Sự hài lòng của khách hàng là động lực to lớn để Hasaki ngày càng phát triển hơn nữa về chất lượng dịch vụ. Cảm ơn bạn đã tin tưởng và mua sắm tại Hasaki!",
+                "answer_created_at": 1743388287,
+                "is_bought": true,
+                "images": null
+            },
+            {
+                "id": 51791,
+                "product_id": 100109,
+                "product_name": "Tẩy Da Chết Toàn Thân Cocoon Đường Thốt Nốt An Giang 200ml",
+                "content": "Sản phẩm thơm, dạng scrub sau khi tan hết sẽ còn lớp dưỡng ẩm. Dùng cho người nhiều tiền vì khá hao, trong thời gian ngắn là hết. Mà khuyến cáo là người nhà giàu da dày cỡ da trâu, da bò, bạn nào có vết thương thì đừng dùng nhé, rát lắm. Lói chung thì nên mua của Hella hoặc của Cocoon mà dạng coffee nó okela và giá hợp lý hơn nhiều.",
+                "user_id": 1558231,
+                "user_fullname": "Ngô Thị Thu Hiền",
+                "rating": {
+                    "star": 4,
+                    "description": "Hài lòng"
+                },
+                "created_at": 1672803290,
+                "answer_rating": "",
+                "answer_created_at": 0,
+                "is_bought": true,
+                "images": null
+            }
+        ],
+        "total": 5
+    }
+}
