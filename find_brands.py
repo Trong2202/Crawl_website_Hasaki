@@ -10,11 +10,10 @@ from config import Config
 def find_brands():
     """Find all brand IDs from Hasaki API"""
     import sys
-    import io
     
     # Fix encoding for Windows
     if sys.platform == "win32":
-        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+        sys.stdout.reconfigure(encoding='utf-8')
     
     print("=" * 60)
     print("FIND BRAND IDs FROM HASAKI")
