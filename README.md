@@ -27,34 +27,7 @@ Daily:   Database → Product (10 workers) → product_api
 - **Products**: ~20-25 products/s
 - **Reviews**: ~15-20 pages/s
 - **Duration**: 1-2 phút (212 products, 750+ review pages)
-- **Efficiency**: 46% duplicate skip (incremental working!)
 
-## 🚀 Quick Start
-
-### 1. Setup
-
-```bash
-git clone https://github.com/YOUR_USERNAME/hasaki_raw.git
-cd hasaki_raw
-python -m venv venv && venv\Scripts\activate
-pip install -r requirements.txt
-cp env.example .env  # Edit với Supabase credentials
-```
-
-### 2. Database
-
-```sql
--- Supabase SQL Editor: Run schema.sql
--- Verify
-SELECT * FROM raw.crawl_sessions LIMIT 1;
-```
-
-### 3. Run Local
-
-```bash
-python crawl_listings.py  # Phase 1: Weekly
-python crawler.py         # Phase 2: Daily
-```
 
 ## 🤖 GitHub Actions
 
@@ -66,9 +39,6 @@ python crawler.py         # Phase 2: Daily
    - **Thứ 2, 1:00 AM UTC**: Listing crawl
    - **Mỗi ngày, 2:00 AM UTC**: Product + Review crawl
 
-### Manual Run
-
-**Actions** → **Hasaki Crawler** → **Run workflow** → Chọn `both` / `listing` / `product`
 
 ## 💾 Database Schema
 
@@ -79,7 +49,8 @@ python crawler.py         # Phase 2: Daily
 | `listing_api` | Product IDs | `(product_id, brand_id, session_id)` |
 | `product_api` | Chi tiết sản phẩm | `(product_id, data)` (trigger) |
 | `review_api` | Review pages | `(product_id, pages, data)` (trigger) |
-
+cd 'c:\Users\ttron\Documents\A_Project\hasaki_raw'
+Get-ChildItem -Recurse -File | Select-Object -ExpandProperty FullName
 **Deduplication:** Direct JSONB comparison trong PostgreSQL triggers (không hash Python-side)
 
 

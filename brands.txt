@@ -6,18 +6,15 @@
 1927  # Cocoon
 3  # Cetaphil
 10  # La Roche-Posay
-13  # L'Oreal
-
-#18  # Paula's Choice
-#21  # St.Ives
-#28  # Bioderma
-#88  # Eucerin
-#105  # CeraVe
-#149  # Simple
-#176  # Garnier
-#643  # Rosette
-#1440  # SVR
-#1927  # Cocoon
-#2432  # Huxley
-#2612  # Caryophy
-#2968  # So'Natural
+#13  # L'Oreal
+18  # Paula's Choice
+21  # St.Ives
+28  # Bioderma
+88  # Eucerin
+149  # Simple
+176  # Garnier
+643  # Rosette
+1440  # SVR
+2432  # Huxley
+2612  # Caryophy
+2089  # Obagi

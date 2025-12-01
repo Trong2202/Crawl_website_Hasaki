@@ -1,23 +1,4 @@
-"""
-Hasaki Listing Crawler - OPTIMIZED FOR PERFORMANCE
-==================================================
-
-Populate listing_api table với tất cả product IDs từ Hasaki
-
-**Performance Features**:
-- Parallel category crawling (20 workers)
-- Batch insert (reduce RPC calls by 90%)
-- Smart progress tracking
-- Memory efficient
-
-**Workflow**:
-1. Chạy file này 1 lần/ngày để update listing_api
-2. Sau đó chạy crawler.py nhiều lần để crawl products
-
-**Time**: 10-15 phút (giảm 50% so với sequential)
-"""
 import sys
-import io
 from datetime import datetime
 from typing import Dict, List, Any
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -42,10 +23,6 @@ class ListingCrawler:
         self.api_client = HasakiAPIClient()
         self.storage = SupabaseStorage()
         
-        # Fix encoding for Windows
-        if sys.platform == "win32":
-            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-        
         # Thread-safe lock
         self.lock = threading.Lock()
         
@@ -63,25 +40,16 @@ class ListingCrawler:
         self,
         categories: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """
-        Parse category hierarchy - lấy TẤT CẢ leaf categories
-        
-        KHÔNG SKIP bất kỳ category nào để đảm bảo crawl đầy đủ
-        """
+        """ Parse category hierarchy - lấy TẤT CẢ leaf categories"""
         leaf_categories = []
         
         def traverse(cat_list: List[Dict[str, Any]]):
-            for cat in cat_list:
-                # REMOVED: Skip logic - crawl ALL categories để đảm bảo đủ data
-                # Lý do: "Mỹ Phẩm High-End" cũng có products cần crawl
-                
+            for cat in cat_list:                
                 cat_id = cat.get("id")
                 if cat_id:
-                    # Nếu có child → traverse deeper
                     if "child" in cat and isinstance(cat["child"], list) and len(cat["child"]) > 0:
                         traverse(cat["child"])
                     else:
-                        # Leaf category → add to list
                         leaf_categories.append({
                             "id": int(cat_id),
                             "name": cat.get("name", "")
@@ -254,17 +222,14 @@ class ListingCrawler:
             # Start session
             self.storage.start_session(api_type="listing_only")
             
-            self.logger.info("=" * 70)
-            self.logger.info("LISTING CRAWLER - Populate listing_api Table (PARALLEL)")
-            self.logger.info("=" * 70)
-            self.logger.info("")
+            self.logger.info("\nListing Crawler - Populate listing_api Table")
             
             # Step 1: Fetch categories
-            self.logger.info("Step 1: Fetching categories...")
+            self.logger.info("\n[1/2] Fetching categories...")
             home_data, _ = self.api_client.get_categories()
             
             if not home_data:
-                self.logger.error("Failed to fetch categories")
+                self.logger.error("  > Failed to fetch categories")
                 self.storage.finish_session(status="failed", total_items=0, skipped_items=0)
                 return
             
@@ -272,16 +237,11 @@ class ListingCrawler:
             self.stats["categories_found"] = len(categories)
             leaf_categories = self._parse_category_hierarchy(categories)
             
-            self.logger.info(f"Found {len(leaf_categories)} leaf categories")
-            self.logger.info("")
+            self.logger.info(f"  > Found {len(leaf_categories)} categories")
             
             # Step 2: Crawl listings (PARALLEL)
-            self.logger.info("=" * 70)
-            self.logger.info(f"Step 2: Crawling {len(leaf_categories)} categories (PARALLEL)")
-            self.logger.info("=" * 70)
             max_workers = 20  # Parallel workers
-            self.logger.info(f"Workers: {max_workers} parallel")
-            self.logger.info("")
+            self.logger.info(f"\n[2/2] Crawling {len(leaf_categories)} categories ({max_workers} workers)...")
             
             completed = 0
             
@@ -309,9 +269,8 @@ class ListingCrawler:
                         
                         # Progress log
                         self.logger.info(
-                            f"[{completed}/{len(leaf_categories)}] {result['category_name']}: "
-                            f"{result['pages']} pages, {result['products']} products, "
-                            f"+{result['inserted']} new"
+                            f"  > [{completed}/{len(leaf_categories)}] {result['category_name']}: "
+                            f"{result['products']} products (+{result['inserted']} new)"
                         )
                     
                     except Exception as e:
@@ -342,30 +301,15 @@ class ListingCrawler:
         minutes = int(duration.total_seconds() / 60)
         seconds = int(duration.total_seconds() % 60)
         
-        self.logger.info("")
-        self.logger.info("=" * 70)
-        self.logger.info("LISTING CRAWL COMPLETED (PARALLEL)")
-        self.logger.info("=" * 70)
-        self.logger.info(f"Session: {self.storage.session_id}")
-        self.logger.info(f"Duration: {minutes}m {seconds}s")
-        self.logger.info("")
-        self.logger.info("Summary:")
-        self.logger.info(f"  Categories crawled: {self.stats['categories_found']}")
-        self.logger.info(f"  Listing pages: {self.stats['listing_pages']}")
-        self.logger.info(f"  Products found: {self.stats['products_found']}")
-        self.logger.info(f"  Products inserted: +{self.stats['products_inserted']}")
-        self.logger.info(f"  Products skipped: {self.stats['products_skipped']} (duplicates)")
-        self.logger.info(f"  Errors: {self.stats['errors']}")
-        self.logger.info("")
-        self.logger.info("Performance:")
-        if minutes > 0:
-            products_per_min = self.stats['products_found'] // minutes
-            self.logger.info(f"  Speed: ~{products_per_min} products/min")
-        self.logger.info(f"  Workers: 20 parallel (50% faster than sequential)")
-        self.logger.info("")
-        self.logger.info("Next step:")
-        self.logger.info("  Run: python crawler.py")
-        self.logger.info("=" * 70)
+        self.logger.info("\n" + "=" * 50)
+        self.logger.info(f"COMPLETED - Session {self.storage.session_id}")
+        self.logger.info("=" * 50)
+        self.logger.info(f"Time: {minutes}m {seconds}s | Categories: {self.stats['categories_found']}")
+        self.logger.info(f"Products: {self.stats['products_found']} found, +{self.stats['products_inserted']} new")
+        if self.stats['errors'] > 0:
+            self.logger.info(f"Errors: {self.stats['errors']}")
+        self.logger.info(f"\nNext: Run 'python crawler.py'")
+        self.logger.info("=" * 50)
 
 
 def main():

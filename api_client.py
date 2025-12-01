@@ -35,8 +35,8 @@ class HasakiAPIClient:
         
         adapter = HTTPAdapter(
             max_retries=retry_strategy,
-            pool_connections=10,
-            pool_maxsize=20
+            pool_connections=30,
+            pool_maxsize=50
         )
         
         session.mount("http://", adapter)
@@ -119,8 +119,6 @@ class HasakiAPIClient:
         Fetch all categories from home API
         Returns: (full_response_data, metadata_dict)
         """
-        self.logger.info("Fetching categories...")
-        
         result = self._make_request(self.config.HASAKI_HOME_API, return_metadata=True)
         if not result:
             return None, None
@@ -136,8 +134,6 @@ class HasakiAPIClient:
         Get all products from a category
         Returns: List of tuples (listing_data, metadata)
         """
-        self.logger.info(f"Fetching product listings from category: {category_name}")
-        
         all_listings = []
         page = 1
         
@@ -159,9 +155,6 @@ class HasakiAPIClient:
             all_listings.append((data, metadata))
             page += 1
         
-        self.logger.info(
-            f"Found {len(all_listings)} pages in {category_name}"
-        )
         return all_listings
     
     def get_product_detail(self, product_id: int) -> tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
@@ -293,12 +286,6 @@ class HasakiAPIClient:
             all_reviews.append((data, metadata, page))
             page += 1
         
-        if all_reviews:
-            self.logger.debug(
-                f"Product {product_id}: {len(all_reviews)} review pages collected "
-                f"(expected: {calculated_max_pages or 'unknown'})"
-            )
-        
         return all_reviews
     
     def get_product_reviews_sequential(
@@ -334,11 +321,6 @@ class HasakiAPIClient:
             
             all_reviews.append((data, metadata))
             page += 1
-        
-        if all_reviews:
-            self.logger.info(
-                f"Found {len(all_reviews)} pages of reviews for product {product_id}"
-            )
         
         return all_reviews
     

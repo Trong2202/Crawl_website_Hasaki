@@ -3,7 +3,6 @@ Simple logging setup with UTF-8 support for Vietnamese characters
 """
 import logging
 import sys
-import io
 from pathlib import Path
 from datetime import datetime
 
@@ -17,20 +16,12 @@ def setup_logger(name="hasaki_crawler"):
     if logger.handlers:
         return logger
     
-    # Format
-    formatter = logging.Formatter(
-        '%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
-    )
+    # Format: Simplified without timestamp for cleaner output
+    formatter = logging.Formatter('%(message)s')
     
     # Fix Windows encoding issue for Vietnamese characters
-    # Wrap stdout in UTF-8 TextIOWrapper
     if sys.platform == "win32":
-        sys.stdout = io.TextIOWrapper(
-            sys.stdout.buffer, 
-            encoding='utf-8', 
-            errors='replace'
-        )
+        sys.stdout.reconfigure(encoding='utf-8')
     
     # Console handler only
     console_handler = logging.StreamHandler(sys.stdout)
